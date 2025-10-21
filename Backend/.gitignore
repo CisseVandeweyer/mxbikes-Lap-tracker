@@ -1,0 +1,55 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django migrations
+*/migrations/*.py
+*/migrations/*.pyc
+!*/migrations/__init__.py
+
+# Virtual environment
+venv/
+env/
+.venv/
+.env/
+
+# Django static files
+staticfiles/
+media/
+
+# IDEs and editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# MacOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Pytest cache
+.pytest_cache/
+
+# mypy type checker
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+
+# Logs
+*.log
+
+# Database
+*.sqlite3
+
+# dotenv environment variables file
+.env
