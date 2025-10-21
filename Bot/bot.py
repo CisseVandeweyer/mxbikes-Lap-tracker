@@ -24,19 +24,29 @@ def format_lap_time(seconds):
     return f"{minutes}:{sec:02d}.{msec:03d}"
 
 
+@bot.slash_command(name="help", description="show all commands with description")
+async def help_command(ctx):
+    embed = Embed(title="Commands:", color=Color.blue())
+    embed.add_field(name="/setusername <username>", value="choose a username ‼️ NEED TO DO FIRST ‼️", inline=False)
+    embed.add_field(name="/editname <new_username>", value="edit your username", inline=False)
+    embed.add_field(name="/addlap <track> <time>", value="add a track time (Format: MM:SS.mmm)", inline=False)
+    embed.add_field(name="/laps [username]", value="Look at the lap times of a user or yourself (optional: your username if no username given)", inline=False)
+    await ctx.respond(embed=embed)
+
+
 @bot.event
 async def on_ready():    
     await bot.sync_commands()
     print(f'Logged in als {bot.user}')
 
     # Bericht sturen in eerste kanaal
-    for guild in bot.guilds:
-        channel = discord.utils.get(guild.text_channels)
-        if channel:
-            try:
-                await channel.send("Hey, ik ben weer online! 🚀")
-            except discord.Forbidden:
-                print(f"Geen permissies in {channel.name} van {guild.name}")
+    # for guild in bot.guilds:
+    #     channel = discord.utils.get(guild.text_channels)
+    #     if channel:
+    #         try:
+    #             await channel.send("Hey, ik ben weer online! 🚀")
+    #         except discord.Forbidden:
+    #             print(f"Geen permissies in {channel.name} van {guild.name}")
 
 # Command om username in te stellen
 @bot.slash_command(name="setusername", description="Stel je username in")
