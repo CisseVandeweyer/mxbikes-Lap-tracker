@@ -5,11 +5,12 @@ class LapSerializer(serializers.ModelSerializer):
     username = serializers.CharField(write_only=True)
     discord_id = serializers.CharField(write_only=True)  # Nieuw veld
     track_name = serializers.CharField(write_only=True)
+    track_display = serializers.CharField(source="track.name", read_only=True)
     time_string = serializers.CharField(write_only=True, required=True)
 
     class Meta:
         model = Lap
-        fields = ['id', 'username', 'discord_id', 'track_name', 'time_string', 'lap_time', 'timestamp']
+        fields = ['id', 'username', 'discord_id', 'track_name', 'track_display', 'time_string', 'lap_time', 'timestamp']
         read_only_fields = ['lap_time', 'timestamp']
 
     def create(self, validated_data):
