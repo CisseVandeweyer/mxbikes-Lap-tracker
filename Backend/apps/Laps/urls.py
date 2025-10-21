@@ -4,7 +4,9 @@ from .views import *
 
 urlpatterns = [
     # Endpoint om een rondetijd toe te voegen
-    path('laps/create/', LapCreateView.as_view(), name='create-lap'),
+    path('users/<str:discord_id>/set_username/', SetUsernameView.as_view(), name='set-username'),
+    path('users/<str:discord_id>/edit_username/', EditUsernameView.as_view(), name='edit-username'),
+    path('laps/create/', AddLapView.as_view(), name='create-lap'),
 
     # Endpoint om rondetijden van een specifieke gebruiker op te halen via discord_id
     path('laps/user/<str:discord_id>/', UserLapsView.as_view(), name='user-laps'),

@@ -41,16 +41,35 @@ async def on_ready():
 # Command om username in te stellen
 @bot.slash_command(name="setusername", description="Stel je username in")
 async def set_username(ctx, username: Option(str, "Je username")):
-    usernames[ctx.author.id] = username
-    await ctx.respond(f"Username ingesteld op **{username}** voor {ctx.author.name}")
+    discord_id = str(ctx.author.id)
+    try:
+        response = requests.post(f"{BACKEND_URL}/users/{discord_id}/set_username/", json={"username": username})
+        if response.status_code == 201:
+            usernames[ctx.author.id] = username
+            await ctx.respond(f"Username ingesteld op **{username}**")
+        else:
+            await ctx.respond(f"Fout bij instellen username: {response.json().get('error')}")
+    except Exception as e:
+        await ctx.respond(f"Er is een fout opgetreden: {e}")
+
+
+@bot.slash_command(name="editname", description="Edit your username")
+async def edit_name(ctx, new_username: Option(str, "Your new username")):
+    discord_id = str(ctx.author.id)
+    try:
+        response = requests.put(f"{BACKEND_URL}/users/{discord_id}/edit_username/", json={"username": new_username})
+        if response.status_code == 200:
+            usernames[ctx.author.id] = new_username
+            await ctx.respond(f"Username aangepast naar **{new_username}**")
+        else:
+            await ctx.respond(f"Fout bij aanpassen username: {response.json().get('error')}")
+    except Exception as e:
+        await ctx.respond(f"Er is een fout opgetreden: {e}")
+
 
 # Command om een lap tijd toe te voegen
 @bot.slash_command(name="addlap", description="Voeg een rondetijd toe")
-async def add_lap(
-    ctx,
-    track: Option(str, "Naam van het circuit"),
-    time: Option(str, "Rondetijd in MM:SS.mmm (bijv. 1:05.747)")
-):
+async def add_lap(ctx, track: Option(str, "Naam van het circuit"), time: Option(str, "Rondetijd in MM:SS.mmm")):
     discord_id = str(ctx.author.id)
     username = usernames.get(ctx.author.id)
 
@@ -70,9 +89,10 @@ async def add_lap(
         if response.status_code in [200, 201]:
             await ctx.respond(f"Rondetijd **{time}** voor **{track}** toegevoegd!")
         else:
-            await ctx.respond(f"Fout bij het toevoegen van rondetijd: {response.text}")
+            await ctx.respond(f"Fout bij toevoegen rondetijd: {response.json().get('error')}")
     except Exception as e:
         await ctx.respond(f"Er is een fout opgetreden: {e}")
+
 
 
 @bot.slash_command(name="laps", description="Bekijk rondetijden van een gebruiker")

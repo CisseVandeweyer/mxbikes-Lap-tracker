@@ -1,0 +1,43 @@
+.App {
+  font-family: sans-serif;
+  padding: 2rem;
+}
+
+.track-grid {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.track-card {
+  background-color: #1f2937;
+  color: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  width: 200px;
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.track-card:hover {
+  transform: scale(1.05);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+th,
+td {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+th {
+  background-color: #4f46e5;
+  color: white;
+}
